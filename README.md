@@ -23,12 +23,14 @@ After that you'll be able to prepare everything:
 * Change the interface being used in **VPN-Monitor** *(variable **VPNIFACE**)*, the VPN profile name *(variable **PROFILE**)* and the **VPN-Killswitch** location *(variable **PATH**)*
 * Move **VPN-Monitor** to **/etc/NetworkManager/dispatcher.d/VPN-Monitor**
 
-## Testing
+## Testing & Troubleshooting
 
-If the killswitch is enabled you'll be able to grep syslog for:
-
-* **VPN-Killswitch**
+grep'ing syslog will let you know if the killswitch is enabled or not: **grep VPN-Killswitch /var/log/syslog**
 
 ## Getting out of the fail safe mode
 
-After VPN-Monitor enables the killswitch, it will be on until you turn it off. To clear it's state, run **VPN-Killswitch -c** or **VPN-Killswitch --clear**. 
+After VPN-Monitor enables the killswitch, it will be on until you turn it off *(that includes reboots)*. To clear it's state, run **VPN-Killswitch -c** or **VPN-Killswitch --clear**. 
+
+## Questions, comments or concerns
+
+Feel free to open an issue or ping me on [Twitter - @0xtf](https://twitter.com/0xtf).
