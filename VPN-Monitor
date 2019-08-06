@@ -1,0 +1,25 @@
+#!/bin/bash
+
+###########################################################################
+# When the status of the VPN interface changes, check the profile         #
+# that is being used. If it matches, enable the killswitch.               #
+#                                                                         #
+# Make sure to change VPNIFACE, PROFILE and PATH                          #
+###########################################################################
+
+IF=$1
+STATUS=$2
+VPNIFACE="ppp0"
+PROFILE="Warzone"
+PATH=/home/tiago/VPN-Killswitch
+ 
+if [ "$IF" == "$VPNIFACE" ]
+then
+    case "$2" in
+        vpn-up)
+        if /usr/bin/nmcli con show --active | /bin/grep "$PROFILE" > /dev/null 2>&1; then $PATH --activate && /usr/bin/logger "VPN-Killswitch ENABLED"; else /usr/bin/logger "VPN-Killswitch - Not the specified profile. Doing nothing."; fi
+        ;;
+        *)
+        ;;
+    esac
+fi

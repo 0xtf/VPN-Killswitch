@@ -1,0 +1,33 @@
+#!/bin/bash
+
+###########################################################################
+# Make sure to change VPNIFACE to match your VPN usage                    #
+###########################################################################
+
+VPNIFACE="ppp0"
+
+# If no arguments are given, print this help
+if [ -z "$*" ]; then echo "Use it with -a (--activate) or -c (--clear)"; fi
+
+# Check if user wants to active or clear the killswitch 
+for arg in "$@"
+do
+    if [ "$arg" == "--activate" ] || [ "$arg" == "-a" ]
+    then
+        echo "y" | sudo ufw reset > /dev/null 2>&1
+        sudo ufw default deny incoming > /dev/null 2>&1
+        sudo ufw default deny outgoing > /dev/null 2>&1
+        sudo ufw allow out on $VPNIFACE from any to any > /dev/null 2>&1
+        echo "y" | sudo ufw enable > /dev/null 2>&1
+        echo "Killswitch has been enabled!"
+    fi
+
+    if [ "$arg" == "--clear" ] || [ "$arg" == "-c" ]
+    then
+        echo "y" | sudo ufw reset > /dev/null 2>&1
+        sudo ufw default deny incoming > /dev/null 2>&1
+        sudo ufw default allow outgoing > /dev/null 2>&1
+        echo "y" | sudo ufw enable > /dev/null 2>&1
+        echo "Killswitch has been cleared! Careful now ..."
+    fi
+done
