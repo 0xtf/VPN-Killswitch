@@ -1,5 +1,7 @@
 #!/bin/bash
 
+DATE=$(/bin/date +"%H:%M:%S--%d-%m-%Y")
+
 ###########################################################################
 # Make sure to change VPNIFACE to match your VPN usage                    #
 ###########################################################################
@@ -14,20 +16,20 @@ for arg in "$@"
 do
     if [ "$arg" == "--activate" ] || [ "$arg" == "-a" ]
     then
-        echo "y" | sudo ufw reset > /dev/null 2>&1
-        sudo ufw default deny incoming > /dev/null 2>&1
-        sudo ufw default deny outgoing > /dev/null 2>&1
-        sudo ufw allow out on $VPNIFACE from any to any > /dev/null 2>&1
-        echo "y" | sudo ufw enable > /dev/null 2>&1
+        echo "y" | /usr/bin/sudo /usr/sbin/ufw reset >> /tmp/VPN-Killswitch-Log-$DATE
+        /usr/bin/sudo /usr/sbin/ufw default deny incoming >> /tmp/VPN-Killswitch-Log-$DATE
+        /usr/bin/sudo /usr/sbin/ufw default deny outgoing >> /tmp/VPN-Killswitch-Log-$DATE
+        /usr/bin/sudo /usr/sbin/ufw allow out on $VPNIFACE from any to any >> /tmp/VPN-Killswitch-Log-$DATE
+        echo "y" | /usr/bin/sudo /usr/sbin/ufw enable >> /tmp/VPN-Killswitch-Log-$DATE
         echo "Killswitch has been enabled!"
     fi
 
     if [ "$arg" == "--clear" ] || [ "$arg" == "-c" ]
     then
-        echo "y" | sudo ufw reset > /dev/null 2>&1
-        sudo ufw default deny incoming > /dev/null 2>&1
-        sudo ufw default allow outgoing > /dev/null 2>&1
-        echo "y" | sudo ufw enable > /dev/null 2>&1
+        echo "y" | /usr/bin/sudo /usr/sbin/ufw reset >> /tmp/VPN-Killswitch-Log-$DATE
+        /usr/bin/sudo /usr/sbin/ufw default deny incoming >> /tmp/VPN-Killswitch-Log-$DATE
+        /usr/bin/sudo /usr/sbin/ufw default allow outgoing >> /tmp/VPN-Killswitch-Log-$DATE
+        echo "y" | /usr/bin/sudo /usr/sbin/ufw enable >> /tmp/VPN-Killswitch-Log-$DATE
         echo "Killswitch has been cleared! Careful now ..."
     fi
 done
