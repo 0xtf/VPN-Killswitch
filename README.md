@@ -13,7 +13,9 @@ This has been tested in Ubuntu 18.04. If you try it and it works well in other v
 
 Before we can use the dispatcher functionality of Network Manager, we need to first enable the dispatcher service *(which is disabled by default)*.
 
-**systemctl enable NetworkManager-dispatcher.service**
+```
+systemctl enable NetworkManager-dispatcher.service
+```
 
 After that you'll be able to prepare everything:
 
@@ -29,7 +31,11 @@ grep'ing syslog will let you know if the killswitch is enabled or not: **grep VP
 
 ## Getting out of the fail safe mode
 
-After VPN-Monitor enables the killswitch, it will be on until you turn it off *(that includes reboots)*. To clear it's state, run **VPN-Killswitch -c** or **VPN-Killswitch --clear**. 
+After VPN-Monitor enables the killswitch, it will be on until you turn it off *(that includes reboots)*. To clear its state, run:
+
+```
+sudo $PATH/VPN-Killswitch -c 
+```
 
 ## Questions, comments or concerns
 
